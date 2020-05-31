@@ -4,6 +4,7 @@
 #include <vector>
 #include <string>
 #include <fstream>
+#include <mutex>
 
 class LogStream{
 private:
@@ -11,7 +12,8 @@ private:
     std::vector<std::string> paths;
 
 public:
-    bool to_stdout; 
+    std::mutex* mutexes;
+    bool to_stdout;
     LogStream(std::vector<std::string>& paths, bool to_stdout);
     ~LogStream();
 

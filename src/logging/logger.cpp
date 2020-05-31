@@ -30,7 +30,7 @@ void Log(LogLevel lvl, const std::string& msg){
             break;
     }
 
-    pid_t id = getpid();
+    pid_t id = gettid();
 
     //TODO: Make Logging configurable
 
@@ -46,7 +46,7 @@ void Log(LogLevel lvl, const std::string& msg){
     LogStream ss(logpaths, true);
     ss << levelstr;
     // ss << "[" << __FILE__ << "] "; //Find a way to print the file from where logging.
-    ss << "[PID: " << id << " " << buff << "] ";
+    ss << "[TID: " << id << " " << buff << "] ";
     ss << msg << "\n";
 
 }
