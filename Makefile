@@ -6,4 +6,5 @@ sharedobjects:
 	g++ -shared -fPIC -pthread -o lib/core.so src/core/* -Iinclude/ -lm -lc -Llib/
 
 test: sharedobjects
+	mkdir bin/tests
 	g++ -o bin/tests/test_log tests/test_log.cpp lib/logging.so -Iinclude/ -Llib/
