@@ -2,6 +2,8 @@
 #define SERVANT_CONN_HANDLER 1
 
 #include <thread>
+#include <mutex>
+#include <condition_variable>
 enum class WorkerState{
     READY = 1,
     BUSY = 3,
@@ -14,7 +16,10 @@ private:
     //pid_t pid;
     //WorkerState state;
     int sockfd;
+    std::mutex wm;
+    std::unique_lock<std::mutex> wul;
 public:
+    std::condition_variable wcv;
     pid_t pid;
     WorkerState state;
     int id;
@@ -23,6 +28,8 @@ public:
     void processRequest();
     int request(int sockfd);
     void kill();
+
+    friend void threadRunner(Worker*);
 };
 
 class Dispatcher{
@@ -33,6 +40,7 @@ private:
 public:
     Dispatcher(int sockfd, int num_workers);
     ~Dispatcher();
+    void AcceptConnection();
 };
 
 void threadRunner(Worker*);

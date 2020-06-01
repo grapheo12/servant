@@ -10,6 +10,15 @@
 #include "logging/logstream.h"
 #define TIMESTRMAXLEN 100
 
+LogStream ss;
+
+void InitLogger(){
+    std::vector<std::string> logpaths;
+    logpaths.push_back("/tmp/servant.log");
+    LogStream buff(logpaths, true);
+    ss = buff;
+}
+
 void Log(LogLevel lvl, const std::string& msg){
     std::string levelstr;
     switch (lvl){
@@ -40,10 +49,7 @@ void Log(LogLevel lvl, const std::string& msg){
     char buff[TIMESTRMAXLEN];
     strftime(buff, TIMESTRMAXLEN, "%c", localtime(&timenow));
     
-    std::vector<std::string> logpaths;
-    logpaths.push_back("/tmp/servant.log");
-
-    LogStream ss(logpaths, true);
+    
     ss << levelstr;
     // ss << "[" << __FILE__ << "] "; //Find a way to print the file from where logging.
     ss << "[TID: " << id << " " << buff << "] ";

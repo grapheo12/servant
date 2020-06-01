@@ -15,6 +15,7 @@ public:
     std::mutex* mutexes;
     bool to_stdout;
     LogStream(std::vector<std::string>& paths, bool to_stdout);
+    LogStream(){}
     ~LogStream();
 
     friend const LogStream& operator<<(const LogStream&, std::string&);

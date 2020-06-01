@@ -13,4 +13,6 @@ enum class LogLevel{
 void Log(LogLevel, const std::string&);
 void Log(const std::string&);
 
+void InitLogger();
+
 #endif

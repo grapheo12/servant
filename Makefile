@@ -1,5 +1,5 @@
 bin/servant: src/main.cpp sharedobjects
-	g++ -g -o bin/servant src/main.cpp lib/* -lc -lm -Llib/ -Iinclude/
+	g++ -g -pthread -o bin/servant src/main.cpp lib/* -lc -lm -Llib/ -Iinclude/
 
 sharedobjects:
 	g++ -shared -fPIC -o lib/logging.so src/logging/* -Iinclude/ -lc -lm -Llib/
