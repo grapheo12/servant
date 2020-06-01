@@ -5,12 +5,14 @@
 #include <unistd.h>
 #include <chrono>
 #include <ctime>
+#include <mutex>
 
 #include "logging/logger.h"
 #include "logging/logstream.h"
 #define TIMESTRMAXLEN 100
 
 LogStream ss;
+std::mutex ms;
 
 void InitLogger(){
     std::vector<std::string> logpaths;
@@ -49,12 +51,13 @@ void Log(LogLevel lvl, const std::string& msg){
     char buff[TIMESTRMAXLEN];
     strftime(buff, TIMESTRMAXLEN, "%c", localtime(&timenow));
     
-    
+    ms.lock();
     ss << levelstr;
     // ss << "[" << __FILE__ << "] "; //Find a way to print the file from where logging.
     ss << "[TID: " << id << " " << buff << "] ";
     ss << msg << "\n";
-
+    ms.unlock();
+    
 }
 
 void Log(const std::string& msg){
